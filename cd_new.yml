@@ -1,0 +1,19 @@
+on:    # this is a dictionary structure  (i think this should be a yaml file)
+    pull_request: # empty dictionary
+    push:
+        branches:
+            - main
+jobs:  # every workflow must have a job
+  tests:  # job called tests
+    runs-on: ubuntu-latest
+    steps:  # sequence of actions to take
+      - uses: actions/checkout@v3 # this is a list element; @v3: will always reference the newest v3; first step 
+      - uses: actions/setup-python@v4 
+          with:  # this is how you pass "custom options" (specific to the action itself
+             python-version: "3.11"
+      - name: Install package and test requirements   # names the step
+        run: python -m pip install .(test) # pip will use the versino of python you checked out
+      - run python -m pytest
+    
+# yml is a subset of json?
+# macos only lets you have 5-10 jobs i think
